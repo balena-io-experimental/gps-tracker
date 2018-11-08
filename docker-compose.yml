@@ -1,0 +1,13 @@
+version: '2.1'
+services:
+  main:
+    build:
+      context: ./gps
+    restart: always
+    devices:
+      - "/dev/UC20.NMEA:/dev/UC20.NMEA"
+      - "/dev/UC20.AT:/dev/UC20.AT"
+    labels:
+      io.resin.features.dbus: '1'
+      io.resin.features.supervisor-api: '1'
+      io.resin.features.resin-api: '1'
