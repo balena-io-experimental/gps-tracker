@@ -1,3 +1,14 @@
+const Uc20 = require("./libs/uc20.js");
+const dbus = require('dbus-native');
+const bus = dbus.sessionBus({socket: '/host/run/dbus/system_bus_socket'});
+
+const uc20 = new Uc20(bus);
+uc20.enableGPS()
+    .then(result => console.log(result))
+    .catch((err) => {
+      console.log("Error enabling GPS: ", err);
+      process.exit(1);
+    });
 const BalenaSdk = require('balena-sdk');
 var sdk;
 sdk = BalenaSdk();
@@ -41,3 +52,14 @@ let timerId = setInterval(() => setLocation(), 60000);
 gpsPort.on('data', function(data) {
   gps.updatePartial(data);
 });
+
+process.on( "SIGTERM", function() {
+  console.log('CLOSING [SIGINT]');
+  uc20.disableGPS()
+    .then(result => console.log("GPS disabled"))
+    .catch((err) => {
+      console.log("Error disabling GPS: ", err);
+      process.exit(1);
+    });
+  process.exit();
+} );

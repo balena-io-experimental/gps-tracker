@@ -121,4 +121,18 @@ dbus-send --print-reply --system \
   string:"AT+QGPSEND" \
   uint32:100
 
+``` 
+# List all modems
+
 ```
+DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket \
+dbus-send --system --print-reply \
+ --dest=org.freedesktop.ModemManager1 /org/freedesktop/ModemManager1 \
+ org.freedesktop.DBus.ObjectManager.GetManagedObjects
+```
+
+DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket \
+dbus-send --print-reply --system \
+     --dest=org.freedesktop.ModemManager1 \
+     /org/freedesktop/ModemManager1/Modem/0 \
+     org.freedesktop.ModemManager1.Modem.Reset
