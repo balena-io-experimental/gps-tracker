@@ -7,8 +7,16 @@ uc20.enableGPS()
     .then(result => console.log(result))
     .catch((err) => {
       console.log("Error enabling GPS: ", err);
+      // Try disabling GPS as this often helps
+      uc20.disableGPS()
+          .then(result => console.log("GPS disabled"))
+          .catch((err) => {
+            console.log("Error disabling GPS: ", err);
+            process.exit(1);
+          });
       process.exit(1);
     });
+
 const BalenaSdk = require('balena-sdk');
 var sdk;
 sdk = BalenaSdk();
@@ -32,7 +40,6 @@ gpsPort.pipe(parser);
  
 var GPS = require('gps');
 var gps = new GPS;
-
 
 var setLocation = function() {
   console.log("fix: ", gps.state.fix);
