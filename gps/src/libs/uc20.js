@@ -1,5 +1,5 @@
 // Quectel uc20 modem
-
+// AT commands from https://www.quectel.com/UploadImage/Downlad/Quectel_UC20_GNSS_AT_Commands_Manual_V1.1.pdf
 function UC20(bus){
     var _bus = bus;
 
@@ -26,8 +26,12 @@ function UC20(bus){
         return _sendAtCommand('ATI');
     }
 
-    this.enableGPS = function () {
-        return _sendAtCommand('AT+QGPS=1');
+    this.enableGPS = function (period) {
+        return _sendAtCommand('AT+QGPS=1,30,50,0,'+ period.toString());
+    }
+
+    this.enableOnlyGgaNmea = function () {
+        return _sendAtCommand('AT+QGPSCFG="gpsnmeatype",1')
     }
 
     this.disableGPS = function () {

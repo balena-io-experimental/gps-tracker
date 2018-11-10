@@ -4,9 +4,7 @@ services:
     build:
       context: ./gps
     restart: always
-    devices:
-      - "/dev/UC20.NMEA:/dev/UC20.NMEA"
-      - "/dev/UC20.AT:/dev/UC20.AT"
+    privileged: true
     labels:
       io.resin.features.dbus: '1'
       io.resin.features.supervisor-api: '1'

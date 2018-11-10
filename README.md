@@ -89,7 +89,7 @@ If your devices are primarily running on cellular data, you should disable the f
 - Disable logs from being sent to Resin
 - Disable VPN
 
-Note that disabling all of the above will mean that you no longer get lively status feedback of your device, for example the online/offline indicator will always show offline and you will not get logs pushed back to the dashboard.
+Note that disabling all of the above will mean that you no longer get lively status feedback of your device, for example the online/offline indicator will always show offline and you will not get logs pushed back to the dashboard. For more information on bandwidth saving checkout this blog post on [Device Data Usage](https://www.balena.io/blog/device-bandwidthdata-usage-how-low-can-we-go/).
 
 Additionally to reduce the size and impact off your updates you should set the following two device configuration options:
 - `BALENA_SUPERVISOR_DELTA` == `1`
@@ -98,6 +98,8 @@ Additionally to reduce the size and impact off your updates you should set the f
 ### Using hologram SpaceBridge
 
 The hologram service provides a tool called [spaceBridge](https://hologram.io/docs/guide/cloud/spacebridge-tunnel/) which allows one to securely ssh into devices though the hologram network. Since balenaOS devices run a socket activated SSH deamon on port 22222, and we have added our custom SSH key in step 4 of "Preparing the image", we can simply set up spaceBridge following the [hologram spaceBridge guide](https://hologram.io/docs/guide/cloud/spacebridge-tunnel/). Now if we setup the bridge to connect to our device on port 22222 we get a secure SSH tunnel into the host of our balenaOS device even if we have the balena VPN disabled!
+
+__Note:__ That spaceBridge will only work when there is an active data session on the cellular connection, so when your device is running on wifi, spaceBridge will fail to establish a link.
 
 ### GPS Related Testing Info
 
