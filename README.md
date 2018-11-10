@@ -9,7 +9,7 @@ GPS Tracker is a simple asset tracker built on balenaCloud and the balena fin bo
 
 ## Setup:
 ### Preparing the image:
-1. Download a .prod variant of the fin operating system from your newly created application
+1. Download a 2.26.0 or later .prod variant of the fin operating system from your newly created application
 2. Unzip the image and mount the boot partition.
 3. Add the following hologram connection file to `resin-boot/system-connections` folder so that our cellular connection will work on first boot.
 
@@ -88,8 +88,9 @@ If your devices are primarily running on cellular data, you should disable the f
 - Disable VPN connectivity check
 - Disable logs from being sent to Resin
 - Disable VPN
+- Set `BALENA_SUPERVISOR_POLL_INTERVAL` == `86400000`, this ensures that the supervisor only checks infor updates once ever 24 hours.
 
-Note that disabling all of the above will mean that you no longer get lively status feedback of your device, for example the online/offline indicator will always show offline and you will not get logs pushed back to the dashboard. For more information on bandwidth saving checkout this blog post on [Device Data Usage](https://www.balena.io/blog/device-bandwidthdata-usage-how-low-can-we-go/).
+Note that disabling all of the above will mean that you no longer get lively status feedback of your device, for example the online/offline indicator will always show offline and you will not get logs pushed back to the dashboard. With all of the above settings the regular operation of the device should use less than 2MB per month. For more information on bandwidth saving checkout this blog post on [Device Data Usage](https://www.balena.io/blog/device-bandwidthdata-usage-how-low-can-we-go/). 
 
 Additionally to reduce the size and impact off your updates you should set the following two device configuration options:
 - `BALENA_SUPERVISOR_DELTA` == `1`
@@ -97,7 +98,12 @@ Additionally to reduce the size and impact off your updates you should set the f
 
 ### Using hologram SpaceBridge
 
-The hologram service provides a tool called [spaceBridge](https://hologram.io/docs/guide/cloud/spacebridge-tunnel/) which allows one to securely ssh into devices though the hologram network. Since balenaOS devices run a socket activated SSH deamon on port 22222, and we have added our custom SSH key in step 4 of "Preparing the image", we can simply set up spaceBridge following the [hologram spaceBridge guide](https://hologram.io/docs/guide/cloud/spacebridge-tunnel/). Now if we setup the bridge to connect to our device on port 22222 we get a secure SSH tunnel into the host of our balenaOS device even if we have the balena VPN disabled!
+The hologram service provides a tool called [spaceBridge](https://hologram.io/docs/guide/cloud/spacebridge-tunnel/) which allows one to securely ssh into devices though the hologram network. Since balenaOS devices run a socket activated SSH deamon on port 22222, and we have added our custom SSH key in step 4 of "Preparing the image", we can simply set up spaceBridge following the [hologram spaceBridge guide](https://hologram.io/docs/guide/cloud/spacebridge-tunnel/). Now if we setup spaceBridge to create a link between our device's port 22222 and our laptop's port 3000. We now should have a secure SSH tunnel into the host of our balenaOS device even with the balena VPN disabled! 
+
+Once you have the spaceBridge running open a terminal session on your laptop and run the following to ssh into your device remotely, make sure you have your key added in step 4 added into your ssh-agent:
+```
+ssh root@127.0.0.1 -p3000
+```
 
 __Note:__ That spaceBridge will only work when there is an active data session on the cellular connection, so when your device is running on wifi, spaceBridge will fail to establish a link.
 
