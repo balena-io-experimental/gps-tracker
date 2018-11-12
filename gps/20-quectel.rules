@@ -1,0 +1,13 @@
+SUBSYSTEMS=="usb", ENV{.LOCAL_ifNum}="$attr{bInterfaceNumber}"
+
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="9003", ENV{.LOCAL_ifNum}=="01", SYMLINK+="UC20.NMEA", MODE="0660"
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="9003", ENV{.LOCAL_ifNum}=="02", SYMLINK+="UC20.AT", MODE="0660"
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="9003", ENV{.LOCAL_ifNum}=="03", SYMLINK+="UC20.MODEM", MODE="0660"
+
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0121", ENV{.LOCAL_ifNum}=="02", SYMLINK+="EC21.AT", MODE="0660"
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0121", ENV{.LOCAL_ifNum}=="03", SYMLINK+="EC21.MODEM", MODE="0660"
+
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0125", ENV{.LOCAL_ifNum}=="01", SYMLINK+="EC25.NMEA", MODE="0660"
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0125", ENV{.LOCAL_ifNum}=="02", SYMLINK+="EC25.AT", MODE="0660"
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0125", ENV{.LOCAL_ifNum}=="03", SYMLINK+="EC25.MODEM", MODE="0660"
+
