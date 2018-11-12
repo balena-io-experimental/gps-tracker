@@ -1,17 +1,17 @@
-const Uc20 = require("./libs/uc20.js");
+const Quectel = require("./libs/quectel.js");
 const led = require("./libs/leds.js");
 const dbus = require('dbus-native');
 const bus = dbus.sessionBus({socket: '/host/run/dbus/system_bus_socket'});
 led.reset();
 var prev = {lat: null, lon: null};
-const uc20 = new Uc20(bus);
+const modem = new Quectel(bus);
 // Start GPS with rate of 1 seconds
-uc20.enableGPS(1)
+modem.enableGPS(1)
     .then(result => console.log(result))
     .catch((err) => {
       console.log("Error enabling GPS: ", err);
       // Try disabling GPS as this often helps
-      uc20.disableGPS()
+      modem.disableGPS()
           .then(result => console.log("GPS disabled"))
           .catch((err) => {
             console.log("Error disabling GPS: ", err);
@@ -31,7 +31,7 @@ const parsers = SerialPort.parsers;
 const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
-const gpsPort = new SerialPort('/host-dev/UC20.NMEA', {
+const gpsPort = new SerialPort('/host-dev/EC25.NMEA', {
   baudRate: 9600
 }, function (err) {
   if (err) {
@@ -72,7 +72,7 @@ gps.on('data', function(){
 
 process.on( "SIGTERM", function() {
   console.log('CLOSING [SIGINT]');
-  uc20.disableGPS()
+  modem.disableGPS()
     .then(result => console.log("GPS disabled"))
     .catch((err) => {
       console.log("Error disabling GPS: ", err);

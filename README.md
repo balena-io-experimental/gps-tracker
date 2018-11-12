@@ -1,5 +1,5 @@
 # GPS Tracker
-GPS Tracker is a simple asset tracker built on balenaCloud and the balena fin board. It makes use of a Quectel UC20 modem to provide both cellular connectivity and GPS location services. The application is a simple node.js service that reads GPS NMEA sentences from the modems serial port and then updates the balena API every few minutes with the devices location. The device location can then be seen from the balenaCloud dashboard.
+GPS Tracker is a simple asset tracker built on balenaCloud and the balena fin board. It makes use of a Quectel EC25 modem to provide both cellular connectivity and GPS location services. The application is a simple node.js service that reads GPS NMEA sentences from the modems serial port and then updates the balena API every 10 minutes with the devices' location. The device location can then be seen from the balenaCloud dashboard.
 
 ## What you need:
 - [Balena Fin board](https://store.balena.io/)
@@ -43,10 +43,10 @@ method=ignore
   }
 ```
 
-5. Add a custom udev rule into the hostOS so that our modem is always enumerated to the same device name, which makes it easy to read our GPS stream. In this case we add a rule to our config.json to always map our modems GPS serial port to `/dev/UC20.NMEA`. For more info on setting these values see here: https://github.com/balena-os/meta-balena#os . To do this we add the following to the “os” section of the config.json:
+5. Add a custom udev rule into the hostOS so that our modem is always enumerated to the same device name, which makes it easy to read our GPS stream. In this case we add a rule to our config.json to always map our modems GPS serial port to `/dev/EC25.NMEA`. For more info on setting these values see here: https://github.com/balena-os/meta-balena#os . To do this we add the following to the “os” section of the config.json:
 ```json
        "udevRules": {
-           "20-uc20-modem": "SUBSYSTEMS==\"usb\", ENV{.LOCAL_ifNum}=\"$attr{bInterfaceNumber}\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"01\", SYMLINK+=\"UC20.NMEA\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"UC20.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"UC20.MODEM\", MODE=\"0660\""
+           "20-quectel": "SUBSYSTEMS==\"usb\", ENV{.LOCAL_ifNum}=\"$attr{bInterfaceNumber}\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"01\", SYMLINK+=\"UC20.NMEA\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"UC20.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"UC20.MODEM\", MODE=\"0660\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0121\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"EC21.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0121\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"EC21.MODEM\", MODE=\"0660\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0125\", ENV{.LOCAL_ifNum}==\"01\", SYMLINK+=\"EC25.NMEA\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0125\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"EC25.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0125\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"EC25.MODEM\", MODE=\"0660\"\n\n"
        }
 
 ```
@@ -75,7 +75,7 @@ method=ignore
            "ssh-rsa blablablablabla johndoe@balena.io"
        ],
        "udevRules": {
-           "20-uc20-modem": "SUBSYSTEMS==\"usb\", ENV{.LOCAL_ifNum}=\"$attr{bInterfaceNumber}\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"01\", SYMLINK+=\"UC20.NMEA\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"UC20.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"UC20.MODEM\", MODE=\"0660\""
+           "20-quectel": "SUBSYSTEMS==\"usb\", ENV{.LOCAL_ifNum}=\"$attr{bInterfaceNumber}\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"01\", SYMLINK+=\"UC20.NMEA\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"UC20.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"05c6\", ATTRS{idProduct}==\"9003\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"UC20.MODEM\", MODE=\"0660\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0121\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"EC21.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0121\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"EC21.MODEM\", MODE=\"0660\"\n\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0125\", ENV{.LOCAL_ifNum}==\"01\", SYMLINK+=\"EC25.NMEA\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0125\", ENV{.LOCAL_ifNum}==\"02\", SYMLINK+=\"EC25.AT\", MODE=\"0660\"\nSUBSYSTEMS==\"usb\", KERNEL==\"ttyUSB[0-9]*\", ATTRS{idVendor}==\"2c7c\", ATTRS{idProduct}==\"0125\", ENV{.LOCAL_ifNum}==\"03\", SYMLINK+=\"EC25.MODEM\", MODE=\"0660\"\n\n"
        }
    }
 }
@@ -109,7 +109,7 @@ __Note:__ That spaceBridge will only work when there is an active data session o
 
 ### GPS Related Testing Info
 
-Quectel uc20:
+Quectel EC25:
 
 enable GPS:
 mmcli -m 0 --command='AT+QGPS=1'

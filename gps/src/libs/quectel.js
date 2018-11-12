@@ -1,6 +1,6 @@
-// Quectel uc20 modem
+// Quectel modem
 // AT commands from https://www.quectel.com/UploadImage/Downlad/Quectel_UC20_GNSS_AT_Commands_Manual_V1.1.pdf
-function UC20(bus){
+function Quectel(bus){
     var _bus = bus;
 
     _sendAtCommand = function (cmd) {
@@ -39,4 +39,4 @@ function UC20(bus){
     }
 }
 
-module.exports = UC20;
+module.exports = Quectel;
