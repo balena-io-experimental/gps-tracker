@@ -1,2 +1,3 @@
 .dockerignore
 20-quectel.rules
+*.jpg
