@@ -7,7 +7,7 @@ GPS Tracker is a simple asset tracker built on balenaCloud and the balena fin bo
 - [A balenaCloud account](https://www.balena.io/cloud/)
 - [A hologram account and sim card](https://hologram.io/)
 
-![Hardware needed](https://github.com/balena-io-playground/gps-tracker/tree/master/gps/fin-gps.jpg)
+![Hardware needed](https://raw.githubusercontent.com/balena-io-playground/gps-tracker/master/gps/fin-gps.jpg)
 
 ## Setup:
 ### Preparing the image:
