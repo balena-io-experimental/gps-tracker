@@ -7,6 +7,8 @@ GPS Tracker is a simple asset tracker built on balenaCloud and the balena fin bo
 - [A balenaCloud account](https://www.balena.io/cloud/)
 - [A hologram account and sim card](https://hologram.io/)
 
+![alt text](https://github.com/balena-io-playground/gps-tracker/tree/master/gps/fin-gps.jpg "Fin GPS Tracker")
+
 ## Setup:
 ### Preparing the image:
 1. Download a 2.26.0 or later .prod variant of the fin operating system from your newly created application
@@ -91,6 +93,8 @@ If your devices are primarily running on cellular data, you should disable the f
 - Set `BALENA_SUPERVISOR_POLL_INTERVAL` == `86400000`, this ensures that the supervisor only checks infor updates once ever 24 hours.
 
 Note that disabling all of the above will mean that you no longer get lively status feedback of your device, for example the online/offline indicator will always show offline and you will not get logs pushed back to the dashboard. With all of the above settings the regular operation of the device should use less than 2MB per month. For more information on bandwidth saving checkout this blog post on [Device Data Usage](https://www.balena.io/blog/device-bandwidthdata-usage-how-low-can-we-go/). 
+
+With the device posting to the API every 10 minutes and the minimal daily check ins for the balena update infrastructure, the device uses about 3MB per day.
 
 Additionally to reduce the size and impact off your updates you should set the following two device configuration options:
 - `BALENA_SUPERVISOR_DELTA` == `1`
