@@ -94,7 +94,7 @@ If your devices are primarily running on cellular data, you should disable the f
 
 Note that disabling all of the above will mean that you no longer get lively status feedback of your device, for example the online/offline indicator will always show offline and you will not get logs pushed back to the dashboard. With all of the above settings the regular operation of the device should use less than 2MB per month. For more information on bandwidth saving checkout this blog post on [Device Data Usage](https://www.balena.io/blog/device-bandwidthdata-usage-how-low-can-we-go/). 
 
-With the device posting to the API every 10 minutes and the minimal daily check ins for the balena update infrastructure, the device uses about 3MB per day.
+With the device posting to the API every 10 minutes and the minimal daily check ins for the balena update infrastructure, the device uses about 3MB per day. The underlying balena check-in will only use about 100kiB per day, so roughly 3MB/month.
 
 Additionally to reduce the size and impact off your updates you should set the following two device configuration options:
 - `BALENA_SUPERVISOR_DELTA` == `1`
