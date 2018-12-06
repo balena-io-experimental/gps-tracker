@@ -31,7 +31,7 @@ const parsers = SerialPort.parsers;
 const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
-const gpsPort = new SerialPort('/host-dev/EC25.NMEA', {
+const gpsPort = new SerialPort('/dev/EC25.NMEA', {
   baudRate: 9600
 }, function (err) {
   if (err) {
