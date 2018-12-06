@@ -20,4 +20,6 @@ COPY entry.sh /usr/bin/entry.sh
 
 RUN chmod +x /usr/bin/entry.sh
 
+ENV UDEV=1
+
 CMD ["bash", "src/start.sh"]
