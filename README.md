@@ -3,7 +3,7 @@ GPS Tracker is a simple asset tracker built on balenaCloud and the balena fin bo
 
 ## What you need:
 - [Balena Fin board](https://store.balena.io/)
-- [Quectel UC20 pcie modem](https://www.quectel.com/product/uc20minipcIe.htm) with 3G and GPS antenna
+- [Quectel EC25 pcie modem](https://www.quectel.com/product/ec25minipcIe.htm) with 3G and GPS antenna
 - [A balenaCloud account](https://www.balena.io/cloud/)
 - [A hologram account and sim card](https://hologram.io/)
 
