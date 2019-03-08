@@ -31,7 +31,9 @@ const parsers = SerialPort.parsers;
 const parser = new parsers.Readline({
   delimiter: '\r\n'
 });
-const gpsPort = new SerialPort('/dev/EC25.NMEA', {
+// Setting up the GPS device, defaulting to EC25 as set up in the udev rules in this project
+const gpsdev = process.argv[2] || 'EC25.NMEA'
+const gpsPort = new SerialPort(`/dev/${gpsdev}`, {
   baudRate: 9600
 }, function (err) {
   if (err) {
@@ -58,7 +60,11 @@ var setLocation = function() {
 let timerId = setInterval(() => setLocation(), 600000);
 
 gpsPort.on('data', function(data) {
-  gps.updatePartial(data);
+  try {
+    gps.updatePartial(data);
+  } catch(err) {
+    console.error(err)
+  }
 });
 
 gps.on('data', function(){
